@@ -25,7 +25,7 @@ signed main() {
                 break;
             }
             if(cur>n/a) break;
-            cur *= a;
+            cur*=a;
         }
         if(ans){
             cout<<"Yes"<<endl;
