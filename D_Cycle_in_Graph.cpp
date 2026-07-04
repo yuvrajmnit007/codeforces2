@@ -15,7 +15,7 @@ void dfs(vector<int>&vis,int i,unordered_map<int,vector<int>>&adj,int parent){
             if(found)return;
         }else if(pos[it]!=-1){
             int sz=path.size()-pos[it];
-            if(sz>=k){
+            if(sz>=k+1){
                 for(int r=pos[it];r<path.size();r++){
                     int p=path[r];
                     ans.push_back(p);
