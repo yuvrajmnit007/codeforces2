@@ -88,7 +88,7 @@ signed main(){
             cout<<"NO"<<endl;
         }else{
             cout<<"YES"<<endl;
-            cout<<ans.size()<<"\n";
+            cout<<ans.size()<<endl;
             for(auto edge:ans)cout<<edge.first<<" "<<edge.second<<endl;
         }
     }
