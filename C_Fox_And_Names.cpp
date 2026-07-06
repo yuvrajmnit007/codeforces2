@@ -1,59 +1,61 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define int long long
+unordered_map<char,vector<char>>adj;
+stack<char>st;
+bool possible=1;
+void dfs(char node ,vector<int>&vis){
+    vis[node-'a']=1;
+    for(auto it:adj[node]){
+        if(vis[it-'a']==0){
+            dfs(it,vis);
+        }else if(vis[it-'a']==1){
+            possible=0;
+        }
+    }
+    vis[node-'a']=2;
+    st.push(node);
+}
 signed main() {
     ios::sync_with_stdio(false);
     cin.tie(NULL);
     int n;
     cin>>n;
-    string ans="";
+    vector<string>vec;
     for(int i=0;i<n;i++){
         string s;
         cin>>s;
-        int sz=ans.size();
-        if(sz>0&&s[0]!=ans[sz-1]){
-            ans+=s[0];
-        }else if(sz==0){
-            ans+=s[0];
-        }else{
-            
-        }
+        vec.push_back(s);
     }
-    vector<int>vec(26,0);
-    for(auto c:ans){
-        vec[c-'a']++;
-        if(vec[c-'a']>1){
+    for(int i=1;i<n;i++){
+        bool flag=1;
+        for(int j=0;j<min((int)vec[i].size(),(int)vec[i-1].size());j++){
+            if(vec[i-1][j]!=vec[i][j]&&flag){
+                adj[vec[i-1][j]].push_back(vec[i][j]);
+                flag=0;
+                break;
+            }
+        }
+        if(flag&&vec[i-1].size()>vec[i].size()){
             cout<<"Impossible"<<endl;
             return 0;
         }
     }
-    string ans1="";
-    for(int i=0;i<26;i++){
-        if(vec[i]==0){
-            ans1+=('a'+i);
+    vector<int>vis(26,0);
+    for(char u='z';u>='a';u--){
+        if(vis[u-'a']==0){
+            dfs(u,vis);
         }
     }
-    int i=0,j=0;
-    string ans2="";
-    while(i<ans1.size()&&j<ans.size()){
-        if(ans1[i]<ans[j]){
-            ans2+=ans1[i];
-            i++;
-        }else{
-            ans2+=ans[j];
-            j++;
-        }
+    if(!possible){
+        cout<<"Impossible"<<endl;
+        return 0;
     }
-    while(i<ans1.size()){
-        ans2+=ans1[i];
-        i++;
+    string ans="";
+    while(!st.empty()){
+        ans+=(st.top());
+        st.pop();
     }
-    while(j<ans.size()){
-        ans2+=ans[i];
-        j++;
-    }
-    cout<<ans2<<endl;
+    cout<<ans<<endl;
     return 0;
 }
-
-
