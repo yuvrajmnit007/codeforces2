@@ -24,11 +24,14 @@ signed main() {
     }
     priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>>pq;
     pq.push({0,0});
+    //forget to initialize it 
+    ans[0]=0;
     while(!pq.empty()){
         auto t=pq.top();
         pq.pop();
         int dist=t.first;
         int node=t.second;
+        if(dist>ans[node])continue;
         for(auto it:adj[node]){
             int v=it.first;
             int wt=it.second;
