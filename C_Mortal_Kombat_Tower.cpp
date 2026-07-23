@@ -18,7 +18,7 @@ int f(int turn,int idx,vector<int>&arr){
             take2=f(0,idx+2,arr);
         }
     }
-    return dp[idx][turn]=min(take1,take2);
+    return dp[idx][turn]=min(take1,take2);//take the minimum of the two options
 }
 signed main() {
     ios::sync_with_stdio(false);
