@@ -19,32 +19,26 @@ signed main() {
         int n;
         cin>>n;
         vector<int>arr(n);
-        int mx=0;
         for(int i=0;i<n;i++){
             cin>>arr[i];
-            mx=max(mx,arr[i]);
         }
-        vector<int>b,c;
-        for(int i=0;i<n;i++){
-            if(arr[i]!=mx){
-                b.push_back(arr[i]);
+        vector<int>ans(n+1,0);
+        for(int i=1;i<=n;i++){
+            if(arr[i-1]==2){
+                ans[i]=ans[i-1]+1;
             }else{
-                c.push_back(mx);
+                ans[i]=ans[i-1];
             }
         }
-        if(b.size()==0||c.size()==0){
-            cout<<-1<<endl;
-        }else{
-            cout<<b.size()<<" "<<c.size()<<endl;
-            for(auto it:b){
-                cout<<it<<" ";
+        bool cnt=0;
+        for(int i=1;i<=n;i++){
+            if(ans[i]*2==ans[n]){
+                cout<<i<<endl;
+                cnt=1;
+                break;
             }
-            cout<<endl;
-            for(auto it:c){
-                cout<<it<<" ";
-            }
-            cout<<endl;
         }
+        if(!cnt)cout<<-1<<endl;
     }
     return 0;
 }
