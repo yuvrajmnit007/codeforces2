@@ -6,38 +6,41 @@
    ██║   ╚██████╔╝ ╚████╔╝ ██║  ██║██║  ██║╚█████╔╝
    ╚═╝    ╚═════╝   ╚═══╝  ╚═╝  ╚═╝╚═╝  ╚═╝ ╚════╝
 */
+
 #include <bits/stdc++.h>
 using namespace std;
 #define int long long
+bool check(vector<int>&vec){
+    if(vec.size()==1)return true;
+    int val=vec[1]-vec[0];
+    for(int i=2;i<vec.size();i++){
+        if(vec[i]-vec[i-1]!=val)return false;
+    }
+    return true;
+}
 signed main() {
     ios::sync_with_stdio(false);
     cin.tie(NULL);
-    int t;
-    cin >> t;
-    while (t--) {
-        int n;
-        cin>>n;
-        vector<int>arr(n);
-        for(int i=0;i<n;i++){
-            cin>>arr[i];
+    int n;
+    cin>>n;
+    vector<int>arr(n);
+    map<int,vector<int>>mp;
+    for(int i=0;i<n;i++){
+        cin>>arr[i];
+        mp[arr[i]].push_back(i);
+    }
+    vector<pair<int,int>>ans;
+    for(auto it:mp){
+        if(check(it.second)){
+            int diff=0;
+            if(it.second.size()==1)diff=0LL;
+            else diff=it.second[1]-it.second[0];
+            ans.push_back({it.first,diff});
         }
-        vector<int>ans(n+1,0);
-        for(int i=1;i<=n;i++){
-            if(arr[i-1]==2){
-                ans[i]=ans[i-1]+1;
-            }else{
-                ans[i]=ans[i-1];
-            }
-        }
-        bool cnt=0;
-        for(int i=1;i<=n;i++){
-            if(ans[i]*2==ans[n]){
-                cout<<i<<endl;
-                cnt=1;
-                break;
-            }
-        }
-        if(!cnt)cout<<-1<<endl;
+    }
+    cout<<ans.size()<<endl;
+    for(auto it:ans){
+        cout<<it.first<<" "<<it.second<<endl;
     }
     return 0;
 }

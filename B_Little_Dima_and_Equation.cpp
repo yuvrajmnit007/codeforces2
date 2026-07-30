@@ -6,38 +6,46 @@
    ██║   ╚██████╔╝ ╚████╔╝ ██║  ██║██║  ██║╚█████╔╝
    ╚═╝    ╚═════╝   ╚═══╝  ╚═╝  ╚═╝╚═╝  ╚═╝ ╚════╝
 */
+
 #include <bits/stdc++.h>
 using namespace std;
 #define int long long
+int f(int val){
+    int sum=0;
+    int k=val;
+    while(k>0){
+        sum+=(k%10);
+        k/=10;
+    }
+    return sum;
+}
+int power(int base,int exp){
+    int res=1;
+    while(exp){
+        if(exp%2){
+            res*=base;
+        }
+        base*=base;
+        exp/=2;
+    }
+    return res;
+}
 signed main() {
     ios::sync_with_stdio(false);
     cin.tie(NULL);
-    int t;
-    cin >> t;
-    while (t--) {
-        int n;
-        cin>>n;
-        vector<int>arr(n);
-        for(int i=0;i<n;i++){
-            cin>>arr[i];
+    int a,b,c;
+    cin>>a>>b>>c;
+    vector<int>ans;
+    for(int i=1;i<=81;i++){
+        int val=c+b*power(i,a);
+        if(f(val)==i&&val<=1e9){
+            ans.push_back(val);
         }
-        vector<int>ans(n+1,0);
-        for(int i=1;i<=n;i++){
-            if(arr[i-1]==2){
-                ans[i]=ans[i-1]+1;
-            }else{
-                ans[i]=ans[i-1];
-            }
-        }
-        bool cnt=0;
-        for(int i=1;i<=n;i++){
-            if(ans[i]*2==ans[n]){
-                cout<<i<<endl;
-                cnt=1;
-                break;
-            }
-        }
-        if(!cnt)cout<<-1<<endl;
     }
+    cout<<ans.size()<<endl;
+    for(auto it:ans){
+        cout<<it<<" ";
+    }
+    cout<<endl;
     return 0;
 }
