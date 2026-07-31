@@ -6,50 +6,40 @@
    ██║   ╚██████╔╝ ╚████╔╝ ██║  ██║██║  ██║╚█████╔╝
    ╚═╝    ╚═════╝   ╚═══╝  ╚═╝  ╚═╝╚═╝  ╚═╝ ╚════╝
 */
-
 #include <bits/stdc++.h>
 using namespace std;
 #define int long long
-vector<vector<int>>dp;
-int f(int idx,vector<int>&vec,int k,int m){
-    if(idx==0)return 0;
-    if(m==0)return 0;
-    if(dp[idx][m]!=-1)return dp[idx][m];
-    int take=0,nottake=0;
-    if(idx-k>=0){
-        take=vec[idx]-vec[idx-k]+f(idx-k,vec,k,m-1);
-    }
-    nottake=f(idx-1,vec,k,m);
-    return dp[idx][m]=max(take,nottake);
-}
 signed main() {
     ios::sync_with_stdio(false);
     cin.tie(NULL);
-    int n,m,k;
-    cin>>n>>m>>k;
-    vector<int>arr(n);
-    vector<int>pre(n+1,0);
+    int n,x;
+    cin>>n>>x;
+    vector<int>arr(2*n);
     for(int i=0;i<n;i++){
         cin>>arr[i];
-        pre[i+1]=pre[i]+arr[i];
+        arr[i+n]=arr[i];
     }
-    if(m*k==n){
-        cout<<pre[n]<<endl;
-    }else{
-        dp.resize(n+1,vector<int>(k+1,-1));
-        cout<<f(n,pre,m,k)<<endl;
+    int ans=0;
+    int days=0;
+    int total=0;
+    int l=0;
+    for(int i=0;i<2*n;i++){
+        total+=(arr[i])*(arr[i]+1)/2;
+        days+=arr[i];
+        while(l<=i&&days-arr[l]>=x){
+            total-=(arr[l])*(arr[l]+1)/2;
+            days-=arr[l];
+            l++;
+        }
+        if(days>=x){
+            int r=arr[l]-(x-(days-arr[l]));
+            int val=(r*(r+1))/2;
+            ans=max(ans,total-val);
+            days-=arr[l];
+            total-=(arr[l])*(arr[l]+1)/2;
+            l++;
+        }
     }
-    // priority_queue<int>pq;
-    // for(int sz=0;sz<m;sz++){
-    //     for(int i=1;i+sz<=n;i++){
-    //         pq.push(pre[i+sz]-pre[i-1]);
-    //     }
-    // }
-    // int ans=0;
-    // while(!pq.edpty()&&k--){
-    //     ans+=pq.top();
-    //     pq.pop();
-    // }
-    // cout<<ans<<endl;
+    cout<<ans<<endl;
     return 0;
 }
