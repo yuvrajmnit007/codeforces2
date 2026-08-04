@@ -13,24 +13,39 @@ using namespace std;
 signed main() {
     ios::sync_with_stdio(false);
     cin.tie(NULL);
-    int n,k;
-    cin>>n>>k;
-    vector<int>arr(n);
-    vector<int>pre(n+1);
-    for(int i=0;i<n;i++){
-        cin>>arr[i];
-        pre[i+1]=pre[i]+arr[i];
+    int t;
+    cin >> t;
+    while(t--){
+        int n;
+        cin>>n;
+        multiset<int>st;
+        for(int i=0;i<n;i++){
+            int x;
+            cin>>x;
+            st.insert(x);
+        }
+        vector<int>ans;
+        int sum=0;
+        bool ok=true;
+        for(int i=0;i<n;i++){
+            int mn=1-sum;
+            auto it=st.lower_bound(mn);
+            if(it==st.end()){
+                ok=false;
+                break;
+            }
+            sum+=*it;
+            st.erase(it);
+            ans.push_back(sum);
+        }
+        if(!ok){
+            cout<<-1<<endl;
+        }else{
+            for(auto it:ans){
+                cout<<it<<" ";
+            }
+            cout<<endl;
+        }
     }
-    int ans=k*pre[n];
-    sort(pre.begin()+1,pre.end()-1);
-    for(int i=1;i<=k-1;i++){
-        ans-=pre[i];
-    }
-    cout<<ans<<endl;
     return 0;
 }
-
-
-
-
-

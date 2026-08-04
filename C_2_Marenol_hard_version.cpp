@@ -13,24 +13,35 @@ using namespace std;
 signed main() {
     ios::sync_with_stdio(false);
     cin.tie(NULL);
-    int n,k;
-    cin>>n>>k;
-    vector<int>arr(n);
-    vector<int>pre(n+1);
-    for(int i=0;i<n;i++){
-        cin>>arr[i];
-        pre[i+1]=pre[i]+arr[i];
+    int t;
+    cin >> t;
+    while (t--) {
+        int n;
+        cin>>n;
+        string s1,s2;
+        cin>>s1>>s2;
+        vector<int>vec1,vec2,vec3,vec4;
+        for(int i=0;i<n;i++){
+            if(i%2==0){
+                if(s1[i]=='1')vec1.push_back(i);
+                if(s2[i]=='1')vec2.push_back(i);
+            }else{
+                if(s1[i]=='1')vec3.push_back(i);
+                if(s2[i]=='1')vec4.push_back(i);
+            }
+        }
+        if(vec1.size()!=vec2.size()||vec3.size()!=vec4.size()){
+            cout<<-1<<endl;
+            continue;
+        }
+        int ans=0;
+        for(int i=0;i<vec1.size();i++){
+            ans+=abs(vec1[i]-vec2[i])/2;
+        }
+        for(int i=0;i<vec3.size();i++){
+            ans+=abs(vec3[i]-vec4[i])/2;
+        }
+        cout<<ans<<endl;
     }
-    int ans=k*pre[n];
-    sort(pre.begin()+1,pre.end()-1);
-    for(int i=1;i<=k-1;i++){
-        ans-=pre[i];
-    }
-    cout<<ans<<endl;
     return 0;
 }
-
-
-
-
-

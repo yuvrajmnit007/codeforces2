@@ -13,24 +13,38 @@ using namespace std;
 signed main() {
     ios::sync_with_stdio(false);
     cin.tie(NULL);
-    int n,k;
-    cin>>n>>k;
-    vector<int>arr(n);
-    vector<int>pre(n+1);
-    for(int i=0;i<n;i++){
-        cin>>arr[i];
-        pre[i+1]=pre[i]+arr[i];
+    int t;
+    cin >> t;
+    while (t--) {
+        int n;
+        cin>>n;
+        string s;
+        cin>>s;
+        int ans=0;
+        int i=0;
+        string s1="";
+        bool flag=false,flag1=false;
+        while(i<n){
+            int j=i;
+            while(j<n&&s[j]==s[i]){
+                j++;
+            }
+            ans++;
+            s1+=s[i];
+            if(j-i==1&&i>0&&i<n-1){
+                flag1=true;
+            }
+            i=j;
+        }
+        for(int i=1;i<n-1;i++){
+            if(s[i-1]!=s[i]&&s[i]!=s[i+1]&&s[i-1]==s[i+1]){
+                flag=true;
+                break;
+            }
+        }
+        if(flag)ans-=2;
+        else if(flag1)ans--;
+        cout<<ans<<endl;
     }
-    int ans=k*pre[n];
-    sort(pre.begin()+1,pre.end()-1);
-    for(int i=1;i<=k-1;i++){
-        ans-=pre[i];
-    }
-    cout<<ans<<endl;
     return 0;
 }
-
-
-
-
-

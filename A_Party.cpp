@@ -13,24 +13,27 @@ using namespace std;
 signed main() {
     ios::sync_with_stdio(false);
     cin.tie(NULL);
-    int n,k;
-    cin>>n>>k;
-    vector<int>arr(n);
-    vector<int>pre(n+1);
-    for(int i=0;i<n;i++){
-        cin>>arr[i];
-        pre[i+1]=pre[i]+arr[i];
+    int n;
+    cin>>n;
+    unordered_map<int,vector<int>>adj;
+    queue<pair<int,int>>q;
+    for(int i=1;i<=n;i++){
+        int x;
+        cin>>x;
+        if(x==-1){
+            q.push({i,0});
+        }
+        adj[x].push_back(i);
     }
-    int ans=k*pre[n];
-    sort(pre.begin()+1,pre.end()-1);
-    for(int i=1;i<=k-1;i++){
-        ans-=pre[i];
+    int ans=0;
+    while(!q.empty()){
+        auto [node,depth]=q.front();
+        q.pop();
+        ans=max(ans,depth);
+        for(int child:adj[node]){
+            q.push({child,depth+1});
+        }
     }
-    cout<<ans<<endl;
+    cout<<ans+1<<endl;
     return 0;
 }
-
-
-
-
-

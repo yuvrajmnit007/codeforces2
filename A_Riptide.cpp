@@ -13,24 +13,22 @@ using namespace std;
 signed main() {
     ios::sync_with_stdio(false);
     cin.tie(NULL);
-    int n,k;
-    cin>>n>>k;
-    vector<int>arr(n);
-    vector<int>pre(n+1);
-    for(int i=0;i<n;i++){
-        cin>>arr[i];
-        pre[i+1]=pre[i]+arr[i];
+    int t;
+    cin >> t;
+    while (t--) {
+        vector<int>arr(3);
+        for(int i=0;i<3;i++){
+            cin>>arr[i];
+        }
+        int a=arr[0],b=arr[1],c=arr[2];
+        sort(arr.begin(),arr.end());
+        if(a==b||a==c||b==c){
+            cout<<0<<endl;
+        }else{
+            int cnt=arr[2]-arr[1];
+            int cnt1=arr[1]-arr[0];
+            cout<<min(cnt,cnt1)<<endl;
+        }
     }
-    int ans=k*pre[n];
-    sort(pre.begin()+1,pre.end()-1);
-    for(int i=1;i<=k-1;i++){
-        ans-=pre[i];
-    }
-    cout<<ans<<endl;
     return 0;
 }
-
-
-
-
-

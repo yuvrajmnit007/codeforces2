@@ -13,24 +13,17 @@ using namespace std;
 signed main() {
     ios::sync_with_stdio(false);
     cin.tie(NULL);
-    int n,k;
-    cin>>n>>k;
-    vector<int>arr(n);
-    vector<int>pre(n+1);
-    for(int i=0;i<n;i++){
-        cin>>arr[i];
-        pre[i+1]=pre[i]+arr[i];
-    }
-    int ans=k*pre[n];
-    sort(pre.begin()+1,pre.end()-1);
-    for(int i=1;i<=k-1;i++){
-        ans-=pre[i];
+    int n,m;
+    cin>>n>>m;
+    int ans=0;
+    map<int,int>mp;
+    for(int i=0;i<=n+m;i++){
+        for(int j=0;j<=n+m;j++){
+            if(i+j*j==n&&i*i+j==m){
+                ans++;
+            }
+        }
     }
     cout<<ans<<endl;
     return 0;
 }
-
-
-
-
-
