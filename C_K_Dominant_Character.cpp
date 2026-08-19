@@ -33,7 +33,7 @@ signed main() {
                     ok1=0;
                     break;
                 }
-            }z
+            }
             //cout<<c<<" "<<ok1<<" "<<k<<endl;
             if(ok1){
                 ok=1;
