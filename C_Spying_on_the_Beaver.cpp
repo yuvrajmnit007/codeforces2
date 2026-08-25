@@ -18,58 +18,20 @@ signed main() {
     while (t--) {
         int n;
         cin>>n;
-        vector<int>arr(n+1);
-        unordered_map<int,vector<int>>adj;
-        for(int i=2;i<=n;i++){
-            cin>>arr[i];
-            adj[arr[i]].push_back(i);
+        for(int i=0;i<n-1;i++){
+            int x;
+            cin>>x;
         }
         int m;
         cin>>m;
-        map<int,int>mp;
+        vector<int>dam(m);
         for(int i=0;i<m;i++){
-            int x;
-            cin>>x;
-            mp[x]=1;
+            cin>>dam[i];
         }
-        map<int,int>mp1;
-        for(int i=n;i>=1;i--){
-            if(mp[i]==1)mp1[i]=1;
-            for(auto it:adj[i]){
-                if(mp1[it]==1){
-                    mp1[i]=1;
-                }
-            }
-        }
-        vector<int>ans;
-        for(int i=1;i<=n;i++){
-            int cnt=0;
-            for(auto it:adj[i]){
-                if(mp1[it]==1){
-                    cnt++;
-                }
-            }
-            if(mp[i]==1){
-                if(cnt>=1){
-                    for(auto it:adj[i]){
-                        if(mp1[it]==1){
-                            ans.insert(it);
-                        }
-                    }
-                }
-            }else{
-                if(cnt>1){
-                    for(auto it:adj[i]){
-                        if(mp1[it]==1){
-                            ans.insert(it);
-                        }
-                    }
-                }
-            }
-        }
-        cout<<ans.size()<<" ";
-        for(int it:ans){
-            cout<<it<<" ";
+        sort(dam.begin(),dam.end());
+        cout<<m-1;
+        for(int i=1;i<m;i++){
+            cout<<" "<<dam[i];
         }
         cout<<endl;
     }
