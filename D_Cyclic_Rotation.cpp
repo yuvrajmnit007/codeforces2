@@ -1,28 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define int long long
-vector<int>f(vector<int>&arr){
-    map<int,int>freq;
-    int n=arr.size();
-    map<int,int>mp;
-    for(int i=0;i<n;i++){
-        freq[arr[i]]++;
-        mp[arr[i]]=max(mp[arr[i]],i);
-    }
-    vector<pair<int,int>>vec;
-    for(auto it:mp){
-        vec.push_back({it.second,it.first});
-    }
-    sort(vec.begin(),vec.end());
-    vector<int>ans;
-    for(auto it:vec){
-        int val=it.second;
-        for(int i=0;i<freq[val];i++){
-            ans.push_back(val);
-        }
-    }
-    return ans;
-}
 signed main() {
     ios::sync_with_stdio(false);
     cin.tie(NULL);
@@ -39,10 +17,32 @@ signed main() {
         for(int i=0;i<n;i++){
             cin>>brr[i];
         }
-        if(f(arr)==f(brr)){
-            cout<<"YES\n";
+        int i=n-1,j=n-1;
+        multiset<int>st;
+        bool ok=1;
+        while(i>=0&&j>=1){
+            if(brr[j]==brr[j-1]){
+                st.insert(brr[j]);
+                j--;
+            }
+            else if(arr[i]==brr[j]){
+                i--;
+                j--;
+            }else{
+                if(st.find(arr[i])==st.end()){
+                    ok=0;
+                    break;
+                }else{
+                    auto it=st.find(arr[i]);
+                    st.erase(it);
+                    i--;
+                }
+            }
+        }
+        if(!ok||j>0){
+            cout<<"NO"<<endl;
         }else{
-            cout<<"NO\n";
+            cout<<"YES"<<endl;
         }
     }
     return 0;
