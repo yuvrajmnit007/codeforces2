@@ -1,9 +1,8 @@
-//problem link :  https://atcoder.jp/contests/dwacon6th-prelims/tasks/dwacon6th_prelims_c
 #include <bits/stdc++.h>
 using namespace std;
 #define int long long
-int MOD=1e9+7;
-vector<int>fact(1001,1);
+vector<int>fact(36,1);
+int MOD=9*1e18;
 int power(int base,int expo){
     int ans=1;
     while(expo>0){
@@ -17,25 +16,19 @@ int power(int base,int expo){
 }
 int ncr(int a,int b){
     if(a<b)return 0;
-    int val=(power(fact[a-b],MOD-2)*power(fact[a],MOD-2))%MOD;
+    int val=(power(fact[a-b],MOD-2)*power(fact[b],MOD-2))%MOD;
     return (fact[a]*val)%MOD;
 }
 signed main() {
     ios::sync_with_stdio(false);
     cin.tie(NULL);
-    for(int i=1;i<1001;i++){
-        fact[i]=(fact[i]*i)%MOD;
+    for(int i=1;i<=35;i++){
+        fact[i]=(fact[i-1]*i)%MOD;
     }
     int n,k;
     cin>>n>>k;
-    vector<int>vec(k);
-    for(int i=0;i<k;i++){
-        cin>>vec[i];
-    }
-    int ans=1;
-    for(int i=0;i<k;i++){
-        ans=(ans*ncr(n,vec[i]))%MOD;
-    }
-    cout<<ncr(3,2)%MOD<<endl;
+    int val=(ncr(2*n,n)*power(n+1,MOD-2));
+    int val2=(ncr(2*(k-1),k-1)*power(k,MOD-2))%MOD;
+    cout<<val-val2<<endl;
     return 0;
 }
