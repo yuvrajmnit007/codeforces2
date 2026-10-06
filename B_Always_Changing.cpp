@@ -12,52 +12,26 @@ signed main() {
         string s;
         cin>>s;
         int cnt0=0,cnt1=0;
-        int ans=1e18;
-        int i=0;
-        bool turn=0;
-        while(i<n){
-            if(!turn){
-                while(i<n&&s[i]=='1'){
-                    cnt1++;
-                    i++;
-                }
-                turn=1;
-            }else{
-                while(i<n&&s[i]=='0'){
-                    cnt0++;
-                    i++;
-                }
-                turn=0;
-            }
+        for(auto it:s){
+            if(it=='0')cnt0++;
+            else cnt1++;
         }
-        if(abs(cnt1-cnt0)<=1){
-            ans=min(ans,cnt1+cnt0);
-        }
-        cnt0=0,cnt1=0;
-        turn=1;
-        while(i<n){
-            if(!turn){
-                while(i<n&&s[i]=='1'){
-                    cnt1++;
-                    i++;
-                }
-                turn=1;
-            }else{
-                while(i<n&&s[i]=='0'){
-                    cnt0++;
-                    i++;
-                }
-                turn=0;
-            }
-        }
-        if(abs(cnt1-cnt0)<=1){
-            ans=min(ans,cnt1+cnt0);
-        }
-        if(ans==1e18){
+        if(abs(cnt0-cnt1)>=3){
             cout<<-1<<endl;
-        }else{
-            cout<<ans<<endl;
+            continue;
         }
+        int len=1;
+        int l0=0,l1=0;
+        if(s[0]=='0')l0++;
+        else l1++;
+        for(int i=1;i<n;i++){
+            if(s[i]!=s[i-1]){
+                len++;
+                if(s[i]=='0')l0++;
+                else l1++;
+            }
+        }
+        cout<<n-len+max(abs((l0-l1)-(cnt0-cnt1))-1,0LL)<<endl;
     }
     return 0;
 }
